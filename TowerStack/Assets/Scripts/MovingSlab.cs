@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovingSlab : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class MovingSlab : MonoBehaviour
 
     public float speed = 2f;
 
-    public static bool done;
+    public static bool done = false;
 
     private void OnEnable()
     {
@@ -26,7 +27,7 @@ public class MovingSlab : MonoBehaviour
     {
         float hangoverValue = 0;
         speed = 0;
-        if(GameManager.count % 2 == 0)
+        if (GameManager.count % 2 == 0)
         {
             hangoverValue = transform.position.x - previousSlab.transform.position.x;
         }
@@ -38,9 +39,12 @@ public class MovingSlab : MonoBehaviour
 
         float direction = hangoverValue > 0 ? 1f : -1f;
         SliceSlab(hangoverValue, direction);
-        if(movingSlab.transform.localScale.x <= 0f || movingSlab.transform.localScale.z <= 0f)
+        if (movingSlab.transform.localScale.x <= 0.25f || movingSlab.transform.localScale.z <= 0.25f)
         {
+            Debug.Log("Done");
             done = true;
+            Camera.main.orthographicSize = Mathf.Max(GameManager.count / 2.25f, 5);
+            Camera.main.transform.position = new Vector3(2.7f, (Mathf.Max(GameManager.count / 2.25f, 5)), 3.1f);
         }
         previousSlab = this;
         GameManager.count++;
@@ -121,5 +125,6 @@ public class MovingSlab : MonoBehaviour
         {
             transform.position += transform.forward * Time.deltaTime * speed;
         }
+
     }
 }
