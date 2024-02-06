@@ -8,11 +8,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            count++;
-            MovingSlab.movingSlab.Stop();
-            Debug.Log(count);
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                MovingSlab.movingSlab.Stop();
+            }
     }
 }
